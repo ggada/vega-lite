@@ -8,7 +8,6 @@ import {FieldDef} from '../../fielddef';
 import * as log from '../../log';
 import {Domain, hasDiscreteDomain, isBinScale, isSelectionDomain, ScaleConfig, ScaleType} from '../../scale';
 import {isSortArray, isSortField, SortField} from '../../sort';
-import {hash} from '../../util';
 import * as util from '../../util';
 import {isDataRefUnionedDomain, isFieldRefUnionDomain} from '../../vega.schema';
 import {
@@ -57,7 +56,7 @@ function parseUnitScaleDomain(model: UnitModel) {
 
       // FIXME: replace this with a special property in the scaleComponent
       localScaleCmpt.set('domainRaw', {
-        signal: SELECTION_DOMAIN + hash(specifiedDomain)
+        signal: SELECTION_DOMAIN + util.hash(specifiedDomain)
       }, true);
     }
 
@@ -287,7 +286,11 @@ export function domainSort(model: UnitModel, channel: ScaleChannel, scaleType: S
 
   // Sorted based on an aggregate calculation over a specified sort field (only for ordinal scale)
   if (isSortField(sort)) {
-    return sort;
+    // flatten nested fields
+    return {
+      ...sort,
+      ...(sort.field ? {field: util.replacePathInField(sort.field)} : {})
+    };
   }
 
   if (sort === 'descending') {
