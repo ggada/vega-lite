@@ -7286,6 +7286,24 @@
         }
       ]
     },
+    "TransformSortField": {
+      "additionalProperties": false,
+      "description": "A comparator for fields within the window transform",
+      "properties": {
+        "field": {
+          "description": "The name of the field to sort.",
+          "type": "string"
+        },
+        "order": {
+          "$ref": "#/definitions/VgComparatorOrder",
+          "description": "Whether to sort the field in ascending or descending order."
+        }
+      },
+      "required": [
+        "field"
+      ],
+      "type": "object"
+    },
     "Type": {
       "anyOf": [
         {
@@ -8166,24 +8184,6 @@
       ],
       "type": "string"
     },
-    "WindowSortField": {
-      "additionalProperties": false,
-      "description": "A compartor for fields within the window transform",
-      "properties": {
-        "field": {
-          "description": "The name of the field to sort.",
-          "type": "string"
-        },
-        "order": {
-          "$ref": "#/definitions/VgComparatorOrder",
-          "description": "Whether to sort the field in ascending or descending order."
-        }
-      },
-      "required": [
-        "field"
-      ],
-      "type": "object"
-    },
     "WindowTransform": {
       "additionalProperties": false,
       "properties": {
@@ -8211,7 +8211,7 @@
         "sort": {
           "description": "A comparator definition for sorting data objects within a window. If two data objects are considered equal by the comparator, they are considered “peer” values of equal rank. If sort is not specified, the order is undefined: data objects are processed in the order they are observed and none are considered peers (the ignorePeers parameter is ignored and treated as if set to `true`).",
           "items": {
-            "$ref": "#/definitions/WindowSortField"
+            "$ref": "#/definitions/TransformSortField"
           },
           "type": "array"
         },

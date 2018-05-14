@@ -6,6 +6,27 @@ import {VgComparatorOrder} from './vega.schema';
 
 export type SortOrder = VgComparatorOrder | null;
 
+
+/**
+ * A sort definition for the window transform
+ */
+export interface TransformSortField {
+  /**
+   * The name of the field to sort.
+   */
+  field: string;
+
+  /**
+   * Whether to sort the field in ascending or descending order.
+   */
+  order?: VgComparatorOrder;
+}
+
+
+/**
+ * A sort definition for a field definition object
+ */
+
 export interface SortField<F> {
   /**
    * The data [field](field.html) to sort by.
